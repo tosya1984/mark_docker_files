@@ -2,7 +2,7 @@ FROM golang:1.22.1 as builder
 
 WORKDIR /home/anton/devops/03/
 COPY . .
-RUN make build
+RUN make image
 
 FROM scratch
 WORKDIR /

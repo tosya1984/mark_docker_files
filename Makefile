@@ -30,7 +30,7 @@ Windows:
 	CGD_ENABLED=0 GOOS=windows GOARCH=${TARGETARCH} go build -v -o main -ldflags "-X="https://github.com/tosya1984/mark_docker_files/cmd.appVersion=${VERSION}
 
 image:
-	docker build . 
+	docker build . --platform ${TARGETOS}/${TARGETARCH}
 # -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
 
 # push:
