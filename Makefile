@@ -16,23 +16,23 @@ lint:
 test:
 	go test -v
 
-build:
+build: format get
 	CGD_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o main -ldflags "-X="github.com/tosya1984/mark_docker_files/cmd.appVersion=${VERSION}
 
-Linux:
-	CGD_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -o main -ldflags "-X="github.com/tosya1984/mark_docker_files/main.appVersion=${VERSION}
+Linux: format get
+	CGD_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -o main -ldflags "-X="github.com/tosya1984/mark_docker_files/cmd.appVersion=${VERSION}
 
 arm:
-	CGD_ENABLED=0 GOOS=windows GOARCH=arm go build -v -o main -ldflags "-X="github.com/tosya1984/mark_docker_files/main.appVersion=${VERSION}
+	CGD_ENABLED=0 GOOS=windows GOARCH=arm go build -v -o main -ldflags "-X="github.com/tosya1984/mark_docker_files/cmd.appVersion=${VERSION}
 
 macOS:
-	CGD_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -v -o main -ldflags "-X="github.com/tosya1984/mark_docker_files/main.appVersion=${VERSION}
+	CGD_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -v -o main -ldflags "-X="github.com/tosya1984/mark_docker_files/cmd.appVersion=${VERSION}
 
 Windows:
-	CGD_ENABLED=0 GOOS=windows GOARCH=${TARGETARCH} go build -v -o main -ldflags "-X="github.com/tosya1984/mark_docker_files/main.appVersion=${VERSION}
+	CGD_ENABLED=0 GOOS=windows GOARCH=${TARGETARCH} go build -v -o main -ldflags "-X="github.com/tosya1984/mark_docker_files/cmd.appVersion=${VERSION}
 
-image:
-	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
+image: 
+	docker build --platform ${TARGETOS}/${TARGETARCH} -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} .
 #   --platform ${TARGETOS}/${TARGETARCH}
 # -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
 
