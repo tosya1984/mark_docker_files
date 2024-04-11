@@ -2,10 +2,10 @@ FROM golang:1.22.1 as builder
 
 WORKDIR /home/anton/devops/03/
 COPY . .
-RUN make image
+RUN make build
 
 FROM scratch
 WORKDIR /
-COPY --from=builder /home/anton/devops/03/mark_docker_files .
+COPY --from=builder /home/anton/devops/03/mark .
 COPY --from=alpine:latest /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 ENTRYPOINT ["./main"]
